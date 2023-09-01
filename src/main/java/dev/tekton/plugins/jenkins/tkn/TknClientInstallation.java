@@ -1,11 +1,5 @@
 package dev.tekton.plugins.jenkins.tkn;
 
-import java.io.IOException;
-import java.util.List;
-
-import org.jenkinsci.Symbol;
-import org.kohsuke.stapler.DataBoundConstructor;
-
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.model.EnvironmentSpecific;
@@ -15,9 +9,13 @@ import hudson.slaves.NodeSpecific;
 import hudson.tools.ToolDescriptor;
 import hudson.tools.ToolInstallation;
 import hudson.tools.ToolProperty;
+import java.io.IOException;
+import java.util.List;
+import org.jenkinsci.Symbol;
+import org.kohsuke.stapler.DataBoundConstructor;
 
-public class TknClientInstallation extends ToolInstallation implements 
-    EnvironmentSpecific<TknClientInstallation>, NodeSpecific<TknClientInstallation> {
+public class TknClientInstallation extends ToolInstallation
+        implements EnvironmentSpecific<TknClientInstallation>, NodeSpecific<TknClientInstallation> {
 
     @DataBoundConstructor
     public TknClientInstallation(String name, String home, List<? extends ToolProperty<?>> properties) {
@@ -31,7 +29,7 @@ public class TknClientInstallation extends ToolInstallation implements
 
     @Override
     public TknClientInstallation forEnvironment(EnvVars environment) {
-        return new TknClientInstallation(getName(), environment.expand(getHome()), getProperties());        
+        return new TknClientInstallation(getName(), environment.expand(getHome()), getProperties());
     }
 
     @Override
