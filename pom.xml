@@ -30,7 +30,7 @@
     <changelist>-SNAPSHOT</changelist>
 
     <!-- https://www.jenkins.io/doc/developer/plugin-development/choosing-jenkins-baseline/ -->
-    <jenkins.version>2.387.3</jenkins.version>
+    <jenkins.version>2.401.3</jenkins.version>
     <gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
     <spotless.check.skip>false</spotless.check.skip>
   </properties>
@@ -40,8 +40,8 @@
       <dependency>
         <!-- Pick up common dependencies for the selected LTS line: https://github.com/jenkinsci/bom#usage -->
         <groupId>io.jenkins.tools.bom</groupId>
-        <artifactId>bom-2.387.x</artifactId>
-        <version>2278.v47b_4508e256a</version>
+        <artifactId>bom-2.401.x</artifactId>
+        <version>2329.v078520e55c19</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
