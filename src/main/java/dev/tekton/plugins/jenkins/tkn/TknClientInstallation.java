@@ -9,6 +9,7 @@ import hudson.slaves.NodeSpecific;
 import hudson.tools.ToolDescriptor;
 import hudson.tools.ToolInstallation;
 import hudson.tools.ToolProperty;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import org.jenkinsci.Symbol;
@@ -39,13 +40,19 @@ public class TknClientInstallation extends ToolInstallation
         }
     }
 
+    public String getTkn() {
+        // TODO: Handle Windows, remote agents
+        File tkn = new File(getHome(), "tkn");
+        return tkn.getPath();
+    }
+
     @Extension
     @Symbol("tkn")
     public static class DescriptorImpl extends ToolDescriptor<TknClientInstallation> {
 
         @Override
         public String getDisplayName() {
-            return "tkn";
+            return Messages.TknClientInstallation_DescriptorImpl_DisplayName();
         }
     }
 }
