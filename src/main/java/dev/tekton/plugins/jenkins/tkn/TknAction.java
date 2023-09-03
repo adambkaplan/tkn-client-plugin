@@ -3,12 +3,12 @@ package dev.tekton.plugins.jenkins.tkn;
 import hudson.model.Run;
 import jenkins.model.RunAction2;
 
-public class HelloWorldAction implements RunAction2 {
+public class TknAction implements RunAction2 {
 
     private String name;
     private transient Run<?, ?> run;
 
-    public HelloWorldAction(String name) {
+    public TknAction(String name) {
         this.name = name;
     }
 
