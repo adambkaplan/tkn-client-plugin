@@ -59,9 +59,13 @@ public class TknBuilder extends Builder implements SimpleBuildStep {
             // TODO: Add support for Windows
             args.add("tkn");
         } else {
-            Node node = Computer.currentComputer().getNode();
+            Computer computer = workspace.toComputer();
+            if (computer == null) {
+                throw new AbortException("No computer detected - offline?");
+            }
+            Node node = computer.getNode();
             if (node == null) {
-                throw new AbortException("offline?");
+                throw new AbortException("No node detected - offline?");
             }
             tkn = tkn.forNode(node, listener);
             tkn = tkn.forEnvironment(env);
