@@ -16,33 +16,54 @@ import hudson.tools.ToolDescriptor;
 import hudson.tools.ToolInstallation;
 import hudson.util.ArgumentListBuilder;
 import java.io.IOException;
+import javax.annotation.CheckForNull;
 import jenkins.tasks.SimpleBuildStep;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.DataBoundSetter;
 
 public class TknBuilder extends Builder implements SimpleBuildStep {
 
     /**
      * Identifies the {@link TknClientInstallation} to use.
      */
-    private final String tknName;
+    @CheckForNull
+    private String toolVersion;
+
+    @CheckForNull
+    private String commands;
 
     @DataBoundConstructor
-    public TknBuilder(String tknName) {
-        this.tknName = tknName;
+    public TknBuilder() {
+        this.toolVersion = "";
+        // If no commands provided, run `tkn version` by default
+        this.commands = "version";
     }
 
-    public String getTknName() {
-        return tknName;
+    @CheckForNull
+    public String getToolVersion() {
+        return toolVersion;
+    }
+
+    @DataBoundSetter
+    public void setToolVersion(@CheckForNull String name) {
+        this.toolVersion = name;
+    }
+
+    @CheckForNull
+    public String getCommands() {
+        return commands;
+    }
+
+    @DataBoundSetter
+    public void setCommands(@CheckForNull String commands) {
+        this.commands = commands;
     }
 
     public TknClientInstallation getTkn() {
-        if (tknName == null) {
-            return null;
-        }
         DescriptorImpl descriptor = (DescriptorImpl) getDescriptor();
         for (TknClientInstallation i : descriptor.getInstallations()) {
-            if (i.getName().equals(this.tknName)) {
+            if (i.getName().equals(this.toolVersion)) {
                 return i;
             }
         }
@@ -52,7 +73,7 @@ public class TknBuilder extends Builder implements SimpleBuildStep {
     @Override
     public void perform(Run<?, ?> run, FilePath workspace, EnvVars env, Launcher launcher, TaskListener listener)
             throws InterruptedException, IOException {
-        run.addAction(new TknAction(tknName));
+        run.addAction(new TknAction(toolVersion));
         ArgumentListBuilder args = new ArgumentListBuilder();
         TknClientInstallation tkn = getTkn();
         if (tkn == null) {
@@ -75,11 +96,17 @@ public class TknBuilder extends Builder implements SimpleBuildStep {
             }
             args.add(exe);
         }
-        // Proof of Concept - run tkn version
-        args.add("version");
-        listener.getLogger().println("Running tkn version");
+        // Proof of Concept - run tkn with arbitrary commands, space-delimited
+        String runCommands = this.commands;
+        // TODO: DRY out the default "version" command
+        if (runCommands == null) {
+            runCommands = "version";
+        }
+        args.add(runCommands.trim().split("\\s"));
+        listener.getLogger().println("Running tkn command");
         try {
             // Run command with stdout and stderr (combined output) printed to the logger
+            // TODO: Handle non-zero returns
             launcher.launch()
                     .cmds(args)
                     .envs(env)
@@ -95,7 +122,7 @@ public class TknBuilder extends Builder implements SimpleBuildStep {
             listener.getLogger().flush();
         }
 
-        listener.getLogger().println("Completed running tkn version");
+        listener.getLogger().println("Completed running tkn command");
     }
 
     @Extension
