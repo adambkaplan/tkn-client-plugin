@@ -31,16 +31,24 @@ public class TknBuilderTest {
     @Test
     public void testConfigRoundtrip() throws Exception {
         FreeStyleProject project = jenkins.createFreeStyleProject();
-        project.getBuildersList().add(new TknBuilder(tknVersion));
+        TknBuilder builder = new TknBuilder();
+        builder.setToolVersion(tknVersion);
+        builder.setCommands("version");
+        project.getBuildersList().add(builder);
         project = jenkins.configRoundtrip(project);
-        jenkins.assertEqualDataBoundBeans(
-                new TknBuilder(tknVersion), project.getBuildersList().get(0));
+
+        TknBuilder expected = new TknBuilder();
+        expected.setToolVersion(tknVersion);
+        expected.setCommands("version");
+        jenkins.assertEqualDataBoundBeans(expected, project.getBuildersList().get(0));
     }
 
     @Test
     public void testBuild() throws Exception {
         FreeStyleProject project = jenkins.createFreeStyleProject();
-        TknBuilder builder = new TknBuilder(tknVersion);
+        TknBuilder builder = new TknBuilder();
+        builder.setToolVersion(tknVersion);
+        builder.setCommands("version");
         project.getBuildersList().add(builder);
         // tkn version should succeed
         // TODO: Test happy/sad paths for tkn existence
@@ -53,7 +61,7 @@ public class TknBuilderTest {
         // String agentLabel = "my-agent";
         // jenkins.createOnlineSlave(Label.get(agentLabel));
         WorkflowJob job = jenkins.createProject(WorkflowJob.class, "test-scripted-pipeline");
-        String pipelineScript = "node {tkn '" + tknVersion + "'}";
+        String pipelineScript = "node {tkn toolVersion: '" + tknVersion + "', commands: 'version'}";
         job.setDefinition(new CpsFlowDefinition(pipelineScript, true));
         // tkn version should succeed
         // TODO: Test happy/sad paths for tkn existence
