@@ -102,6 +102,12 @@ public class TknBuilder extends Builder implements SimpleBuildStep {
         if (runCommands == null) {
             runCommands = "version";
         }
+
+        // Warn if KUBECONFIG env var is not set
+        if (!env.containsKey("KUBECONFIG")) {
+            listener.getLogger().println("WARN: no KUBECONFIG provided, using system default kubeconfig credentials.");
+        }
+
         args.add(runCommands.trim().split("\\s"));
         listener.getLogger().println("Running tkn command");
         try {
