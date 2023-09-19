@@ -1,10 +1,16 @@
 # `tkn` Client Plugin
 
-## Introduction
+A Jenkins plugin for running Tekton pipelines with the `tkn` CLI.
 
-A Jenkins plugin for running Tekton pipelines
+## Prerequisites
+
+- A jenkins installation running version 2.401.1.
+- (optional) Install a plugin that supports management of Kubernetes credentials, such as:
+  - [Kubernetes Plugin](https://plugins.jenkins.io/kubernetes/) for full Kubernetes integration.
+  - [Kubernetes CLI Plugin](https://plugins.jenkins.io/kubernetes-cli/) for simple setups.
 
 ## Getting started
+
 
 TODO Tell users how to configure your plugin here, include screenshots, pipeline examples and 
 configuration-as-code examples.
