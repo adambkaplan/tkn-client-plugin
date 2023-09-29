@@ -73,7 +73,6 @@ public class TknBuilder extends Builder implements SimpleBuildStep {
     @Override
     public void perform(Run<?, ?> run, FilePath workspace, EnvVars env, Launcher launcher, TaskListener listener)
             throws InterruptedException, IOException {
-        run.addAction(new TknAction(toolVersion));
         ArgumentListBuilder args = new ArgumentListBuilder();
         TknClientInstallation tkn = getTkn();
         if (tkn == null) {
