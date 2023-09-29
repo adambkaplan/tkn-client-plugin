@@ -1,4 +1,4 @@
 <?jelly escape-by-default='true'?>
 <div>
-    TODO
+    Plugin to use and manage Tekton's commnad line (tkn) in Jenkins pipelines.
 </div>

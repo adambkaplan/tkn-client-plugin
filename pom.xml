@@ -11,7 +11,7 @@
   <artifactId>tkn-client-plugin</artifactId>
   <version>${revision}${changelist}</version>
   <packaging>hpi</packaging>
-  <name>tkn Client Plugin</name>
+  <name>Tkn Client Plugin</name>
   <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
   <licenses>
     <license>
