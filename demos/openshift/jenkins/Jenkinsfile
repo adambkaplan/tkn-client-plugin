@@ -1,0 +1,11 @@
+pipeline {
+   agent any
+   stages {
+      stage('Build') {
+         steps {
+            checkout scm
+            tkn toolVersion: 'v0.32.0', commands: 'pipeline start -f demos/openshift/tekton/pipeline-s2i-go.yaml -w name=workspace,claimName=s2i-go --showlog --use-param-defaults'
+         }
+      }
+   }
+}

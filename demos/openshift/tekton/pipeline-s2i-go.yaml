@@ -1,0 +1,49 @@
+﻿apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: s2i-go
+  namespace: jenkins-tkn
+spec:
+  params:
+    - default: 'image-registry.openshift-image-registry.svc:5000/jenkins-tkn/golang-ex'
+      name: IMAGE_NAME
+      type: string
+    - default: 'https://github.com/sclorg/golang-ex.git'
+      name: GIT_REPO
+      type: string
+    - default: master
+      name: GIT_REVISION
+      type: string
+  tasks:
+    - name: fetch-repository
+      params:
+        - name: url
+          value: $(params.GIT_REPO)
+        - name: revision
+          value: $(params.GIT_REVISION)
+        - name: subdirectory
+          value: ''
+        - name: deleteExisting
+          value: 'true'
+      taskRef:
+        kind: ClusterTask
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: workspace
+    - name: build
+      params:
+        - name: IMAGE
+          value: $(params.IMAGE_NAME)
+        - name: TLSVERIFY
+          value: 'false'
+      runAfter:
+        - fetch-repository
+      taskRef:
+        kind: ClusterTask
+        name: s2i-go
+      workspaces:
+        - name: source
+          workspace: workspace
+  workspaces:
+    - name: workspace
