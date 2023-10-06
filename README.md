@@ -78,4 +78,4 @@ Refer to our [contribution guidelines](https://github.com/jenkinsci/.github/blob
 
 ## LICENSE
 
-Licensed under Apache 2.0, see [LICENSE](LICENSE.md)
+Licensed under The MIT License, see [LICENSE](LICENSE.md)
