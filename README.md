@@ -4,9 +4,13 @@ Plugin to use and manage [Tekton](https://tekton.dev)'s commnad line (`tkn`) in 
 
 Inspired by - but not to be confused with - the [Tekton Client Plugin](https://plugins.jenkins.io/tekton-client/).
 
+## Quick Demo
+
+[![](https://img.youtube.com/vi/BnTI8AulvZo/0.jpg)](https://www.youtube.com/watch?v=BnTI8AulvZo "Jenkins tkn Client Plugin Demo")
+
 ## Prerequisites
 
-- A Jenkins installation running version 2.401.1 or higher.
+- A Jenkins installation running version 2.401.3 or higher.
 - (optional) Install a plugin that supports management of Kubernetes credentials, such as:
   - [Kubernetes Plugin](https://plugins.jenkins.io/kubernetes/) for full Kubernetes integration.
   - [Kubernetes CLI Plugin](https://plugins.jenkins.io/kubernetes-cli/) for simple setups.
@@ -70,7 +74,7 @@ You can also use the "Run a tkn command" build step in a Freestyle-based Jenkins
 
 ## Issues
 
-Report issues and enhancements on this GitHub project.
+Report issues and enhancements [here](https://github.com/adambkaplan/tkn-client-plugin).
 
 ## Contributing
 
